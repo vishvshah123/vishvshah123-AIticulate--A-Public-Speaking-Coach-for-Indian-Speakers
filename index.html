@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIticulate - AI Speech Coach for Indian English Speakers</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen active">
+        <div class="container">
+            <div class="welcome-content">
+                <h1>Welcome to AIticulate</h1>
+                <h3>Your AI Speech Coach for Indian English Speakers</h3>
+                <p>Improve your pronunciation, fluency, and public speaking skills with personalized AI coaching.</p>
+                
+                <div class="welcome-features">
+                    <div class="feature-card">
+                        <h4>Speech Analysis</h4>
+                        <p>Get real-time feedback on your pronunciation, speaking rate, and filler words.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>AI Coach</h4>
+                        <p>Chat with our AI coach for personalized speaking tips and practice mock interviews.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Progress Tracking</h4>
+                        <p>Track your improvement over time with detailed metrics and personalized suggestions.</p>
+                    </div>
+                </div>
+                
+                <div class="speaking-goals">
+                    <h4>What are your speaking goals?</h4>
+                    <div class="goal-options">
+                        <button class="btn btn--secondary goal-btn" data-goal="professional">Professional Presentations</button>
+                        <button class="btn btn--secondary goal-btn" data-goal="interview">Job Interviews</button>
+                        <button class="btn btn--secondary goal-btn" data-goal="casual">Casual Conversations</button>
+                        <button class="btn btn--secondary goal-btn" data-goal="academic">Academic Speaking</button>
+                    </div>
+                </div>
+                
+                <button id="get-started-btn" class="btn btn--primary">Get Started</button>
+                <p class="browser-note">Note: AIticulate works best in Chrome and browsers that support the Web Speech API.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Application Screen -->
+    <div id="main-screen" class="screen">
+        <header class="app-header">
+            <div class="container">
+                <div class="flex justify-between items-center">
+                    <div class="logo">AIticulate</div>
+                    <nav class="main-nav">
+                        <button id="practice-nav" class="nav-btn active">Practice</button>
+                        <button id="chatbot-nav" class="nav-btn">AI Coach</button>
+                        <button id="settings-nav" class="nav-btn">Settings</button>
+                        <button id="help-nav" class="nav-btn">Help</button>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        
+        <main class="app-content">
+            <div class="container">
+                <!-- Practice Section -->
+                <section id="practice-section" class="app-section active">
+                    <div class="section-header">
+                        <h2>Speaking Practice</h2>
+                        <p>Practice your speaking skills and get real-time feedback.</p>
+                    </div>
+                    
+                    <div class="practice-content">
+                        <div class="topic-selector">
+                            <h4>Choose a topic or speak freely:</h4>
+                            <select id="practice-topic" class="form-control">
+                                <option value="">Select a practice topic...</option>
+                                <!-- Topics will be populated from JavaScript -->
+                            </select>
+                        </div>
+                        
+                        <div class="speech-controls">
+                            <button id="start-recording" class="btn btn--primary">Start Speaking</button>
+                            <button id="stop-recording" class="btn btn--outline" disabled>Stop</button>
+                            <div id="recording-status">Click "Start Speaking" when ready</div>
+                            <div id="mic-status" class="status status--info hidden">Microphone status</div>
+                        </div>
+                        
+                        <div class="speech-transcription">
+                            <h4>Your Speech:</h4>
+                            <div id="transcription-container"></div>
+                        </div>
+                        
+                        <div id="analysis-container" class="analysis-container hidden">
+                            <h3>Speech Analysis</h3>
+                            
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <h4>Speaking Rate</h4>
+                                    <div id="speaking-rate-value" class="metric-value">0 WPM</div>
+                                    <div id="speaking-rate-feedback" class="metric-feedback"></div>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <h4>Filler Words</h4>
+                                    <div id="filler-count-value" class="metric-value">0</div>
+                                    <div id="filler-feedback" class="metric-feedback"></div>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <h4>Pauses</h4>
+                                    <div id="pause-count-value" class="metric-value">0</div>
+                                    <div id="pause-feedback" class="metric-feedback"></div>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <h4>Duration</h4>
+                                    <div id="duration-value" class="metric-value">0:00</div>
+                                </div>
+                            </div>
+                            
+                            <div class="pronunciation-feedback">
+                                <h4>Pronunciation Feedback</h4>
+                                <div id="pronunciation-issues"></div>
+                            </div>
+                            
+                            <div class="improvement-suggestions">
+                                <h4>Suggestions for Improvement</h4>
+                                <ul id="suggestions-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Chatbot Section -->
+                <section id="chatbot-section" class="app-section">
+                    <div class="section-header">
+                        <h2>AI Speech Coach</h2>
+                        <p>Chat with your AI coach for personalized advice and practice.</p>
+                    </div>
+                    
+                    <div class="chatbot-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Chat messages will be added here by JavaScript -->
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <input type="text" id="chat-input" class="form-control" placeholder="Ask your AI coach something...">
+                            <button id="send-message" class="btn btn--primary">Send</button>
+                        </div>
+                        
+                        <div class="chat-suggestions">
+                            <h4>Suggested Questions:</h4>
+                            <div class="suggestion-buttons">
+                                <button class="btn btn--outline suggestion-btn">How can I improve my 'th' sounds?</button>
+                                <button class="btn btn--outline suggestion-btn">Tips for reducing filler words?</button>
+                                <button class="btn btn--outline suggestion-btn">Help me prepare for an interview</button>
+                                <button class="btn btn--outline suggestion-btn">What's my biggest pronunciation challenge?</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Settings Section -->
+                <section id="settings-section" class="app-section">
+                    <div class="section-header">
+                        <h2>Settings</h2>
+                        <p>Customize your AIticulate experience.</p>
+                    </div>
+                    
+                    <div class="settings-content">
+                        <div class="form-group">
+                            <label class="form-label" for="accent-preference">Accent Preference</label>
+                            <select id="accent-preference" class="form-control">
+                                <option value="neutral">Neutral/International English</option>
+                                <option value="british">British English</option>
+                                <option value="american">American English</option>
+                                <option value="indian">Indian English</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="speaking-goal">Primary Speaking Goal</label>
+                            <select id="speaking-goal" class="form-control">
+                                <option value="professional">Professional Presentations</option>
+                                <option value="interview">Job Interviews</option>
+                                <option value="casual">Casual Conversations</option>
+                                <option value="academic">Academic Speaking</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="feedback-detail">Feedback Detail Level</label>
+                            <select id="feedback-detail" class="form-control">
+                                <option value="basic">Basic - Focus on major issues</option>
+                                <option value="detailed" selected>Detailed - Comprehensive feedback</option>
+                                <option value="advanced">Advanced - Expert-level analysis</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Focus Areas</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="focus-pronunciation" checked> Pronunciation
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="focus-fluency" checked> Fluency
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="focus-grammar" checked> Grammar
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="focus-vocabulary" checked> Vocabulary
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button id="save-settings" class="btn btn--primary">Save Settings</button>
+                    </div>
+                </section>
+                
+                <!-- Help Section -->
+                <section id="help-section" class="app-section">
+                    <div class="section-header">
+                        <h2>Help & Information</h2>
+                        <p>Learn how to get the most out of AIticulate.</p>
+                    </div>
+                    
+                    <div class="help-content">
+                        <div class="help-card">
+                            <h3>Using the Speaking Practice</h3>
+                            <ol>
+                                <li>Select a topic or speak freely</li>
+                                <li>Click "Start Speaking" and allow microphone access</li>
+                                <li>Speak clearly into your microphone</li>
+                                <li>Click "Stop" when you're finished</li>
+                                <li>Review your detailed feedback</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="help-card">
+                            <h3>Common Pronunciation Challenges</h3>
+                            <div id="pronunciation-help"></div>
+                        </div>
+                        
+                        <div class="help-card">
+                            <h3>Browser Compatibility</h3>
+                            <p>AIticulate works best in the following browsers:</p>
+                            <ul>
+                                <li>Google Chrome (recommended)</li>
+                                <li>Microsoft Edge</li>
+                                <li>Safari (limited functionality)</li>
+                                <li>Firefox (limited functionality)</li>
+                            </ul>
+                            <p>If you encounter issues, try switching to Google Chrome for the best experience.</p>
+                        </div>
+                        
+                        <div class="help-card">
+                            <h3>Privacy Information</h3>
+                            <p>AIticulate processes all speech data in your browser. No audio recordings are sent to any server. Your privacy is important to us.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
